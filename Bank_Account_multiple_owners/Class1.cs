@@ -38,6 +38,14 @@ namespace Bank_Account_multiple_owners
         }
         public void MakeWithdrawal(decimal amount, DateTime date, string notes)
         {
+            if (amount < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), "Amount must be positive");
+            }
+            if (Balance - amount < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), "Remaining deposit must be positive");
+            }
             Transaction transaction = new Transaction(DateTime.Now, -amount, notes);
             allTransactions.Add(transaction);
         }
